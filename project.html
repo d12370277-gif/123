@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>李翠霞 - 遊戲集</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background-image: url('2025.jpg'); /* 背景圖片 */
+      background-size: cover;       
+      background-repeat: no-repeat; 
+      background-position: center top; /* 背景靠上 */
+      color: white;
+      text-align: center;
+      font-family: "Microsoft JhengHei", sans-serif;
+    }
+
+    nav {
+      background-color: rgba(0, 0, 0, 0.4);
+      padding: 15px;
+      font-size: 24px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: yellow;
+    }
+
+    .text-box {
+      display: block;
+      margin: 20px auto;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 20px 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.6);
+      text-align: center;
+      width: fit-content;
+    }
+
+    /* 作品集區塊 */
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin: 30px 0;
+    }
+
+    .gallery-item {
+      position: relative;
+      display: inline-block;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.6);
+    }
+
+    .gallery-item img {
+      display: block;
+      width: 300px;
+      height: auto;
+      transition: transform 0.3s;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05); /* 滑鼠經過放大效果 */
+    }
+
+    .gallery-caption {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 10px 0;
+      text-align: center;
+      font-size: 18px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <h1 class="text-box">李翠霞 - 遊戲集</h1>
+
+  <nav>
+    <a href="index.html">個人簡介</a>
+    <a href="research.html">cos作品</a>
+    <a href="project.html">遊戲</a>
+    <a href="books.html">作品集</a>
+    <a href="service.html">學歷經驗</a>
+  </nav>
+
+  <p class="text-box">最近在玩</p>
+
+  <!-- 作品集 -->
+  <div class="gallery">
+    <div class="gallery-item">
+      <img src="3der.png" alt="作品1">
+      <div class="gallery-caption">崩壞三rd</div>
+    </div>
+    <div class="gallery-item">
+      <img src="AK.png" alt="作品2">
+      <div class="gallery-caption">明日方舟</div>
+    </div>
+    <div class="gallery-item">
+      <img src="b.jfif" alt="作品3">
+      <div class="gallery-caption">邦邦</div>
+    </div>
+    <div class="gallery-item">
+      <img src="Coo.jfif" alt="作品4">
+      <div class="gallery-caption">薑餅人王國</div>
+    </div>
+     <div class="gallery">
+    <div class="gallery-item">
+      <img src="FGO.jpg" alt="作品1">
+      <div class="gallery-caption">fgo</div>
+    </div>
+    <div class="gallery-item">
+      <img src="s.png" alt="作品2">
+      <div class="gallery-caption">崩鐵</div>
+    </div>
+    <div class="gallery-item">
+      <img src="u.png" alt="作品3">
+      <div class="gallery-caption">賽馬娘</div>
+    </div>
+    <div class="gallery-item">
+      <img src="fs.jpg" alt="作品4">
+      <div class="gallery-caption">fate samurai remnant</div>
+    </div>
+       
+  
+    <!-- 可以再增加更多圖片 -->
+  </div>
+
+</body>
+</html>
