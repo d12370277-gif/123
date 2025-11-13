@@ -1,207 +1,190 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>李翠霞 - 作品集</title>
-  <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background-image: url('00.PNG'); /* 背景圖片 */
-      background-size: cover;       
-      background-repeat: no-repeat; 
-      background-position: center top; /* 背景靠上 */
-      color: white;
-      text-align: center;
-      font-family: "Microsoft JhengHei", sans-serif;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>李翠霞 - 作品集（高畫質預覽）</title>
+<style>
+  body {
+    margin: 0;
+    background-image: url('00.PNG');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center top;
+    font-family: "Microsoft JhengHei", sans-serif;
+    text-align: center;
+    color: white;
+    overflow-x: hidden;
+  }
 
-    nav {
-      background-color: rgba(0, 0, 0, 0.4);
-      padding: 15px;
-      font-size: 24px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    }
+  nav {
+    background-color: rgba(0,0,0,0.4);
+    padding: 15px;
+    font-size: 24px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  }
 
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin: 0 15px;
-      transition: color 0.3s;
-    }
+  nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+  }
 
-    nav a:hover {
-      color: yellow;
-    }
+  nav a:hover {
+    color: yellow;
+  }
 
-    .text-box {
-      display: block;
-      margin: 20px auto;
-      background: rgba(0, 0, 0, 0.5);
-      color: white;
-      padding: 20px 40px;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.6);
-      text-align: center;
-      width: fit-content;
-    }
+  .text-box {
+    display: block;
+    margin: 20px auto;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px 40px;
+    border-radius: 10px;
+    width: fit-content;
+  }
 
-    /* 作品集區塊 */
+  /* === 圖片方格：電腦上兩排四張 === */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 每排四張 */
+    justify-items: center;
+    gap: 25px;
+    margin: 30px auto;
+    max-width: 1000px;
+  }
+
+  /* 手機或窄螢幕時自動變兩張一排 */
+  @media (max-width: 768px) {
     .gallery {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      margin: 30px 0;
+      grid-template-columns: repeat(2, 1fr);
+      max-width: 500px;
     }
+  }
 
-    .gallery-item {
-      position: relative;
-      display: inline-block;
-      overflow: hidden;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.6);
-    }
+  .gallery-item {
+    position: relative;
+    width: 230px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.1);
+    box-shadow: 0 0 10px rgba(0,0,0,0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
 
-    .gallery-item img {
-      display: block;
-      width: 300px;
-      height: auto;
-      transition: transform 0.3s;
-    }
+  .gallery-item:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 20px rgba(0,0,0,0.6);
+  }
 
-    .gallery-item:hover img {
-      transform: scale(1.05); /* 滑鼠經過放大效果 */
-    }
+  .gallery-item img {
+    width: 100%;
+    height: auto;  /* 保持原比例 */
+    display: block;
+  }
 
-    .gallery-caption {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      color: white;
-      padding: 10px 0;
-      text-align: center;
-      font-size: 18px;
-    }
+  .gallery-caption {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    font-size: 18px;
+    padding: 6px 0;
+    margin: 0;
+  }
 
-  </style>
+  /* === 放大預覽 === */
+  .preview-img {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    max-width: 90vw;
+    max-height: 90vh;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+    z-index: 1001;
+    border-radius: 10px;
+    animation: zoomIn 0.25s ease forwards;
+  }
+
+  @keyframes zoomIn {
+    from { transform: translate(-50%, -50%) scale(0.7); opacity: 0; }
+    to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.8);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+  }
+
+  .overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+</style>
 </head>
 <body>
 
-  <h1 class="text-box">李翠霞 - 作品集</h1>
+<h1 class="text-box">李翠霞 - 作品集</h1>
 
-  <nav>
-    <a href="index.html">個人簡介</a>
-    <a href="research.html">cos作品</a>
-    <a href="project.html">遊戲</a>
-    <a href="books.html">作品集</a>
-    <a href="service.html">學歷經驗</a>
-  </nav>
+<nav>
+  <a href="index.html">個人簡介</a>
+  <a href="research.html">cos作品</a>
+  <a href="project.html">遊戲</a>
+  <a href="books.html">作品集</a>
+  <a href="service.html">學歷經驗</a>
+</nav>
 
-  <p class="text-box">最近的畫</p>
+<p class="text-box">最近的畫</p>
 
-  <!-- 作品集 -->
-  <div class="gallery">
-    <div class="gallery-item">
-      <img src="cwt67 (3).JPEG" alt="作品1">
-      <div class="gallery-caption">刀也</div>
-    </div>
-    <div class="gallery-item">
-      <img src="插圖52.PNG" alt="作品2">
-      <div class="gallery-caption">セラフ</div>
-    </div>
-    <div class="gallery-item">
-      <img src="凪風生賀.PNG" alt="作品3">
-      <div class="gallery-caption">三枝明那</div>
-    </div>
-    <div class="gallery-item">
-      <img src="阿琉瑪半身.PNG" alt="作品4">
-      <div class="gallery-caption">阿瑠瑪</div>
-    </div>
-    <div class="gallery-item">
-      <img src="川0生日.PNG" alt="作品5">
-      <div class="gallery-caption">緋八</div>
-    </div>
-    <div class="gallery-item">
-      <img src="插圖28.PNG" alt="作品6">
-      <div class="gallery-caption">德克薩斯</div>
-    </div>
-    <div class="gallery-item">
-      <img src="歐.jpg" alt="作品7">
-      <div class="gallery-caption">雷歐</div>
-    </div>
-    <div class="gallery-item">
-      <img src="插圖4 (2).jpg" alt="作品8">
-      <div class="gallery-caption">人設OC</div>
-    </div>
-  </div>
+<div class="gallery" id="gallery">
+  <div class="gallery-item"><img src="cwt67_small.JPEG" data-large="cwt67_large.JPEG" alt="刀也"><div class="gallery-caption">刀也</div></div>
+  <div class="gallery-item"><img src="插圖52_small.PNG" data-large="插圖52_large.PNG" alt="セラフ"><div class="gallery-caption">セラフ</div></div>
+  <div class="gallery-item"><img src="凪風生賀_small.PNG" data-large="凪風生賀_large.PNG" alt="四枝暗那"><div class="gallery-caption">四枝暗那</div></div>
+  <div class="gallery-item"><img src="阿琉瑪半身_small.PNG" data-large="阿琉瑪半身_large.PNG" alt="阿瑠瑪"><div class="gallery-caption">阿瑠瑪</div></div>
+  <div class="gallery-item"><img src="川0生日_small.PNG" data-large="川0生日_large.PNG" alt="緋八"><div class="gallery-caption">緋八</div></div>
+  <div class="gallery-item"><img src="插圖28_small.PNG" data-large="插圖28_large.PNG" alt="德克薩斯"><div class="gallery-caption">德克薩斯</div></div>
+  <div class="gallery-item"><img src="歐_small.jpg" data-large="歐_large.jpg" alt="雷歐"><div class="gallery-caption">雷歐</div></div>
+  <div class="gallery-item"><img src="插圖4 (2)_small.jpg" data-large="插圖4 (2)_large.jpg" alt="人設OC"><div class="gallery-caption">人設OC</div></div>
+</div>
 
-  <!-- 背景變暗遮罩 -->
-  <div class="dim-overlay" id="dimOverlay"></div>
+<div class="overlay" id="overlay"></div>
 
-  <script>
-    const images = document.querySelectorAll('.gallery-item img');
-    const overlay = document.getElementById('dimOverlay');
-    let activeImg = null;
+<script>
+const gallery = document.getElementById('gallery');
+const overlay = document.getElementById('overlay');
+let previewImg = null;
 
-    images.forEach(img => {
-      img.addEventListener('click', () => {
-        // 如果已經是放大的，再點一次就縮小
-        if (img.classList.contains('zoomed')) {
-          img.classList.remove('zoomed');
-          overlay.classList.remove('active');
-          activeImg = null;
-        } else {
-          // 若有其他放大圖片，先關閉
-          if (activeImg) activeImg.classList.remove('zoomed');
-          img.classList.add('zoomed');
-          overlay.classList.add('active');
-          activeImg = img;
-        }
-      });
-    });
+gallery.addEventListener('click', e => {
+  const img = e.target.closest('img');
+  if (!img) return;
 
-    // 點背景時關閉放大
-    overlay.addEventListener('click', () => {
-      if (activeImg) activeImg.classList.remove('zoomed');
-      overlay.classList.remove('active');
-      activeImg = null;
-    });
-  </script>
+  if (previewImg) { previewImg.remove(); overlay.classList.remove('active'); previewImg = null; return; }
 
-</body>
-/* 點擊圖片放大（原地放大 + 背景變暗） */
-.dim-overlay {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.7);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s;
-  z-index: 10;
-}
+  const largeSrc = img.dataset.large || img.src;
+  previewImg = document.createElement('img');
+  previewImg.src = largeSrc;
+  previewImg.classList.add('preview-img');
+  document.body.appendChild(previewImg);
 
-.dim-overlay.active {
-  opacity: 1;
-  visibility: visible;
-}
+  overlay.classList.add('active');
+});
 
-/* 放大圖片的動畫 */
-.gallery-item img {
-  transition: transform 0.3s ease, z-index 0s;
-  cursor: pointer;
-  z-index: 1;
-}
-
-.gallery-item img.zoomed {
-  transform: scale(2); /* 放大倍數 */
-  z-index: 1000;       /* 讓它顯示在最上層 */
-  position: relative;
-}
-
+overlay.addEventListener('click', () => {
+  if (previewImg) previewImg.remove();
+  overlay.classList.remove('active');
+  previewImg = null;
+});
+</script>
 
 </body>
 </html>
