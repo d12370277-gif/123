@@ -138,36 +138,70 @@
     </div>
   </div>
 
-  <!-- 點擊放大圖片的燈箱 -->
-  <div id="lightbox" class="lightbox">
-    <img id="lightbox-img" src="" alt="">
-  </div>
+  <!-- 背景變暗遮罩 -->
+  <div class="dim-overlay" id="dimOverlay"></div>
 
   <script>
-    // 取得所有 gallery 的圖片
-    const galleryImages = document.querySelectorAll('.gallery-item img');
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
+    const images = document.querySelectorAll('.gallery-item img');
+    const overlay = document.getElementById('dimOverlay');
+    let activeImg = null;
 
-    // 點擊圖片時開啟放大圖
-    galleryImages.forEach(img => {
+    images.forEach(img => {
       img.addEventListener('click', () => {
-        lightboxImg.src = img.src;
-        lightbox.style.display = 'flex';
+        // 如果已經是放大的，再點一次就縮小
+        if (img.classList.contains('zoomed')) {
+          img.classList.remove('zoomed');
+          overlay.classList.remove('active');
+          activeImg = null;
+        } else {
+          // 若有其他放大圖片，先關閉
+          if (activeImg) activeImg.classList.remove('zoomed');
+          img.classList.add('zoomed');
+          overlay.classList.add('active');
+          activeImg = img;
+        }
       });
     });
 
-    // 點擊燈箱任何地方關閉放大圖
-    lightbox.addEventListener('click', () => {
-      lightbox.style.display = 'none';
+    // 點背景時關閉放大
+    overlay.addEventListener('click', () => {
+      if (activeImg) activeImg.classList.remove('zoomed');
+      overlay.classList.remove('active');
+      activeImg = null;
     });
   </script>
 
 </body>
+/* 點擊圖片放大（原地放大 + 背景變暗） */
+.dim-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s;
+  z-index: 10;
+}
 
-  
-    <!-- 可以再增加更多圖片 -->
-  </div>
+.dim-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 放大圖片的動畫 */
+.gallery-item img {
+  transition: transform 0.3s ease, z-index 0s;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.gallery-item img.zoomed {
+  transform: scale(2); /* 放大倍數 */
+  z-index: 1000;       /* 讓它顯示在最上層 */
+  position: relative;
+}
+
 
 </body>
 </html>
