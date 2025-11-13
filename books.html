@@ -120,24 +120,51 @@
       <img src="阿琉瑪半身.PNG" alt="作品4">
       <div class="gallery-caption">阿瑠瑪</div>
     </div>
-     <div class="gallery">
     <div class="gallery-item">
-      <img src="川0生日.PNG" alt="作品1">
+      <img src="川0生日.PNG" alt="作品5">
       <div class="gallery-caption">緋八</div>
     </div>
     <div class="gallery-item">
-      <img src="插圖28.PNG" alt="作品2">
+      <img src="插圖28.PNG" alt="作品6">
       <div class="gallery-caption">德克薩斯</div>
     </div>
     <div class="gallery-item">
-      <img src="歐.jpg" alt="作品3">
+      <img src="歐.jpg" alt="作品7">
       <div class="gallery-caption">雷歐</div>
     </div>
     <div class="gallery-item">
-      <img src="插圖4 (2).jpg" alt="作品4">
+      <img src="插圖4 (2).jpg" alt="作品8">
       <div class="gallery-caption">人設OC</div>
     </div>
-       
+  </div>
+
+  <!-- 點擊放大圖片的燈箱 -->
+  <div id="lightbox" class="lightbox">
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+  <script>
+    // 取得所有 gallery 的圖片
+    const galleryImages = document.querySelectorAll('.gallery-item img');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+
+    // 點擊圖片時開啟放大圖
+    galleryImages.forEach(img => {
+      img.addEventListener('click', () => {
+        lightboxImg.src = img.src;
+        lightbox.style.display = 'flex';
+      });
+    });
+
+    // 點擊燈箱任何地方關閉放大圖
+    lightbox.addEventListener('click', () => {
+      lightbox.style.display = 'none';
+    });
+  </script>
+
+</body>
+
   
     <!-- 可以再增加更多圖片 -->
   </div>
